@@ -2,8 +2,8 @@
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 import binascii
-keyPair = RSA.generate(8192)
-class encrpython(keyPair):
+class encrpython():
+  keyPair = RSA.generate(8192)
   
   def pubKey(keyPair):
     
