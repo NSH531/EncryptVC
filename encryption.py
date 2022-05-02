@@ -1,6 +1,23 @@
 import rsa
 import binascii
 class encrpython():
+  def verify(message, signature, key):
+    try:
+        return rsa.verify(message.encode('ascii'), signature, key,) == 'SHA-1'
+    except:
+        return False
+
+  def sign(message, key):
+    return rsa.sign(message.encode('ascii'), key, 'SHA-1')
+
+  def encrypt(message, key):
+    return rsa.encrypt(message.encode('ascii'), key)
+  def decrypt(ciphertext, key):
+    try:
+        return rsa.decrypt(ciphertext, key).decode('ascii')
+    except:
+        return False
+
   def generateKeys():
     (publicKey, privateKey) = rsa.newkeys(8192)
     with open('keys/publcKey.pem', 'wb') as p:
