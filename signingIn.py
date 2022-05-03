@@ -1,3 +1,5 @@
+#from hashlib import _Hash
+import hashlib
 import rsa
 import binascii
 from flask import Flask, render_template, request
@@ -21,10 +23,13 @@ class encrpython():
         except:
             return False
       def gk():
-        return         rsa.newkeys(8192)
+            x=rsa.newkeys(8192)
+            pubkey=x[0]
+            privkey=x[1]
+            return        [pubkey,privkey] 
 
       def generateKeys():
-        (publicKey, privateKey) = encrpython.gk()
+        [publicKey, privateKey] = encrpython.gk()
 
         with open('keys/publcKey.pem', 'wb') as p:
             p.write(publicKey.save_pkcs1('PEM'))
@@ -39,17 +44,31 @@ class encrpython():
 
             
 c1=[]
-
+V1=[]
 MyCrypt=encrpython()
 @app.route("/crypt",methods=["POST"])
 def myload():
     name = request.args.get("name")
+    for i in c1:
+          if(i==name):
+                return c1
     file= request.args.get('file')
-    keys=MyCrypt.gk()
-    c1.append({name:keys})
+    keys= rsa.newkeys(8192)
+    n=(hashlib.sha1(name).hexdigest())
+    
+    c1.append([n,keys])
 
-    with open('keys', 'w') as c:
+    with open('keys', 'a') as c:
       c.write(c1)
+    with open('DATA', 'a') as V:
+      k=[]
+      for i in c1:
+            if i[0]==n:
+                  k=i[1]
+                  print(k)
+                  
+      V1=MyCrypt.encrypt()
+      V.write(V1)
     return keys
 @app.route("/")
 def index():
