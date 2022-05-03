@@ -54,7 +54,8 @@ def myload():
                 return c1
     file= request.args.get('file')
     keys= rsa.newkeys(4608)
-    n=(hashlib.sha1(name).hexdigest())
+  
+    n=hashlib.sha1(name,usedforsecurity=True).hexdigest()
     
     c1.append([n,keys])
 
