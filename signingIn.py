@@ -54,14 +54,16 @@ def myload():
                 return c1
     file= request.args.get('file')
     keys= rsa.newkeys(4608)
-  
-    n=hashlib.sha1(name,usedforsecurity=True).hexdigest()
+    if(name):
+              n=hashlib.sha1(bytes(name),usedforsecurity=True).hexdigest()
+    else:
+              n=hashlib.sha1(bytes("נתנאל שטרן"),usedforsecurity=True).hexdigest()
     
     c1.append([n,keys])
 
     with open('keys', 'a') as c:
       c.write(c1)
-    with open('DATA', 'a') as V:
+    with open('DATA', 'ab') as V:
       k=[]
       for i in c1:
             if i[0]==n:
@@ -82,4 +84,4 @@ def index():
 </div>
 """
 if __name__ == "__main__":
-     app.run()
+     app.run('0.0.0.0',8531)
