@@ -23,7 +23,7 @@ class encrpython():
         except:
             return False
       def gk():
-            x=rsa.newkeys(8192)
+            x=rsa.newkeys(4608)
             pubkey=x[0]
             privkey=x[1]
             return        [pubkey,privkey] 
@@ -53,7 +53,7 @@ def myload():
           if(i==name):
                 return c1
     file= request.args.get('file')
-    keys= rsa.newkeys(8192)
+    keys= rsa.newkeys(4608)
     n=(hashlib.sha1(name).hexdigest())
     
     c1.append([n,keys])
